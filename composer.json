@@ -1,0 +1,20 @@
+{
+    "name": "phpauth/phpauth.dictionary",
+    "description": "PHPAuth Custom Languages",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Karel Wintersky",
+            "email": "karel.wintersky@yandex.ru"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPAuth\\": "sources/"
+        }
+    }
+}
