@@ -1,6 +1,6 @@
 {
-    "name": "phpauth/phpauth.dictionary",
-    "description": "PHPAuth Custom Languages",
+    "name": "phpauth/phpauth.l10n",
+    "description": "PHPAuth Localizations",
     "type": "library",
     "license": "MIT",
     "authors": [

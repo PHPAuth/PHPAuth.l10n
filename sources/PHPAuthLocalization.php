@@ -2,15 +2,24 @@
 
 namespace PHPAuth;
 
-class PHPAuthDictionary
+use PDO;
+
+// PHPAuthLocalization
+
+class PHPAuthLocalization
 {
-    public function __construct()
+    public const DEFAULT_SQL_TABLE = 'phpauth_translation_dictionary';
+
+    private $current_language = '';
+
+    public function __construct(string $language = 'en_GB')
     {
+        $this->current_language = $language;
     }
 
-    public function use($language = 'en_GB'):array
+    public function use():array
     {
-        $lang_file = __DIR__ . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . "{$language}.php";
+        $lang_file = __DIR__ . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . "{$this->current_language}.php";
 
         if (is_readable($lang_file)) {
             $dictionary = include $lang_file;
@@ -19,6 +28,20 @@ class PHPAuthDictionary
         }
 
         return $dictionary;
+    }
+
+    /**
+     * Load localization data from Database table phpauth_translation_dictionary
+     *
+     * @param string $sql_table
+     * @param PDO $pdo
+     * @return array|false
+     */
+    public function useDB(PDO $pdo, string $sql_table = self::DEFAULT_SQL_TABLE)
+    {
+        return $pdo
+            ->query("SELECT `translation_key`, `{$this->current_language}` as `lang` FROM {$sql_table} ")
+            ->fetchAll(PDO::FETCH_KEY_PAIR);
     }
 
     /**
